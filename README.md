@@ -97,3 +97,12 @@ wtf-peewee==0.2.6
 ------
 
 So, for completely requirements you also can checkout at **[requirements.txt](requirements.txt)**.
+
+
+RUN THE SERVER
+-----
+
+
+```
+$ python manage.py runserver
+```
