@@ -96,4 +96,4 @@ wtf-peewee==0.2.6
 
 ------
 
-So, we completely requirements you also can checkout at **[requirements.txt](requirements.txt)**.
+So, for completely requirements you also can checkout at **[requirements.txt](requirements.txt)**.
