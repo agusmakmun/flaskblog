@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block meta_title %}Tag: {{ tag }}{% endblock %}
+
+{% block content %}
+  <div class="alert alert-info text-center cst__radius">
+    <i class="glyphicon glyphicon-info-sign"></i> Post berdasarkan tag <i><b>{{ tag }}</b></i>
+  </div>
+
+  {% for post in posts.items %}
+    <h1 class="post-title"><a href="{{ url_for('posts.detail', slug=post.slug) }}">{{ post.title }}</a></h1>
+    <p class="meta">
+      Created at: {{ post.created_date.strftime('%Y-%m-%d %H:%M') }}
+
+      {% if post.tags %}
+        - Tagged on: 
+        {% for tag in post.tags %}
+          <a href="{{ url_for('posts.tag', slug=tag.slug) }}">{{ tag.title }}</a>{% if not loop.last %}, {% endif %}
+        {% endfor %}
+      {% endif %}
+    </p>
+
+    {% if post.body %}
+      <p>{{ post.body|striptags|truncate(200) }}</p>
+    {% endif %}
+    <hr />
+  {% endfor %}
+
+  <ul class="pager">
+    {% if posts.has_prev %}
+      <li><a href="{{ url_for('posts.tag_page', slug=tag_slug, page=posts.prev_num) }}">&larr; Newer posts</a></li>
+    {% else %}
+      <li class="disabled"><a>&larr; Newer posts</a></li>
+    {% endif %}
+
+    {% if posts.has_next %}
+      <li><a href="{{ url_for('posts.tag_page', slug=tag_slug, page=posts.next_num) }}">Older posts &rarr;</a></li>
+    {% else %}
+      <li class="disabled"><a>Older posts &rarr;</a></li>
+    {% endif %}
+  </ul>
+{% endblock %}
+
+
+{% block sidebar %}
+  <div class="sidebar-module-inset">
+    <h4>Recent Comments</h4>
+    <div id="dsq-recent-comments" class="dsq-widget"></div>
+    <script type="text/javascript">
+      var disqus_shortname = '{{ disqus_shortname }}';
+    </script>
+    <script src='//{{ disqus_shortname }}.disqus.com/recent_comments_widget.js?num_items=5&hide_avatars=0&avatar_size=24&excerpt_length=50'></script>
+  </div><!-- end /.sidebar-module-inset --> 
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "admin/base.html" %}
+{% block meta_title %}{% if create_tag %}Add new Tag{% else %}Edit Tag{% endif %}{% endblock %}
+
+{% block content %}
+  <div class="strike-line top_0">
+    <span><small>
+    {% if create_tag %}
+      Add new Tag
+    {% else %}
+      Edit Tag
+    {% endif %}
+    </small></span>
+  </div>
+
+  <form action="." method="post">
+    <fieldset>
+    {% for field in form %}
+      {% if field.type in ['CSRFTokenField', 'HiddenField'] %}
+        {{ field() }}
+      {% else %}
+        <div class="form-group {% if field.errors %}error{% endif %}">
+          {% if not field.name=="slug" %}{{ field.label }}{% endif %}
+
+          <div class="input">
+            {% if field.name == "slug" %}
+              {{ field(type='hidden', ) }}
+            {% else %}
+              {{ field() }}
+            {% endif %}
+            {% if field.errors or field.help_text %}
+              <span class="help-inline">
+              {% if field.errors %}
+                {{ field.errors|join(' ') }}
+              {% else %}
+                {{ field.help_text }}
+              {% endif %}
+              </span>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+    </fieldset>
+    <div class="actions">
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+          <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i> Save</button>
+        </div>
+        {% if not create_tag %}
+        <div class="btn-group" role="group">
+          <a data-toggle="modal" data-target=".modal-{{ tag.pk|string() }}" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</a>
+        </div>
+        {% endif %}
+        <div class="btn-group" role="group">
+          <a href="{{ url_for('admin.index') }}" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i> Cancel</a>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  {% if not create_tag %}
+  <div class="modal fade modal-{{ tag.pk|string() }}" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="panel-body text-center">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          Are you sure want to delete this tag?<br /><b>{{ tag.title }}</b>
+          <hr />
+
+          <div class="btn-group btn-group-justified" role="group" aria-label="...">
+            <div class="btn-group" role="group">
+              <a href="{{ url_for('admin.delete_tag', slug=tag.slug) }}" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</a>
+            </div>
+            <div class="btn-group" role="group">
+              <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i> Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}{# end if not create #}
+
+  <script type="text/javascript">
+    document.getElementById('title').className = 'form-control cst__radius';
+  </script>
+
+  <div class="strike-line">
+    <span><small>Available Tags - <i>Click to Edit or Delete</i></small></span>
+  </div>
+
+  {% if not tags %}
+    No tags!
+  {% else %}
+    {% for tag in tags %}
+      <a href="{{ url_for('admin.edit_tag', slug=tag.slug) }}" class="btn btn-sm btn-default">
+        <i class="glyphicon glyphicon-tag"></i> {{ tag.title }}
+      </a>
+    {% endfor %}
+  {% endif %}
+{% endblock %}
+
+
+{% block sidebar %}
+  <div class="strike-line top_0">
+    <span><small>Available Menus</small></span>
+  </div>
+  <div class="sidebar-module-inset">
+    <button onclick="location.href='{{ url_for("admin.create") }}'" class="btn btn-block btn-success cst__radius"><i class="glyphicon glyphicon-plus"></i> Create New Post</button>
+    <button onclick="location.href='{{ url_for("admin.create_tag") }}'" class="btn btn-block btn-warning cst__radius"><i class="glyphicon glyphicon-tag"></i> View Tags or Create</button>
+  </div><!-- end /.sidebar-module-inset --> 
+{% endblock %}

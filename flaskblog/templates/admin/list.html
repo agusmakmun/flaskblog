@@ -1,0 +1,76 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+  <div class="strike-line top_0">
+    <span><small>Posts on Admin page</small></span>
+  </div>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <th>No.</th>
+      <th>Title</th>
+      <th>Created</th>
+      <th>Actions</th>
+    </thead>
+    <tbody>
+    {% for post in posts.items %}
+      <tr>
+        <th>{{ loop.index }}</th>
+        <th><a href="{{ url_for('admin.edit', slug=post.slug) }}">{{ post.title }}</a></th>
+        <td>{{ post.created_date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        <td>
+          <a target="_blank" href="{{ url_for('posts.detail', slug=post.slug) }}" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-eye-open"></i> View</a>
+          <a href="{{ url_for('admin.edit', slug=post.slug) }}" class="btn btn-xs btn-warning"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+          <a data-toggle="modal" data-target=".modal-{{ post.pk|string() }}" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</a>
+        </td>
+      </tr>
+
+      <div class="modal fade modal-{{ post.pk|string() }}" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="panel-body text-center">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              Are you sure want to delete this post?<br /><b>{{ post.title }}</b>
+              <hr />
+
+              <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                <div class="btn-group" role="group">
+                  <a href="{{ url_for('admin.delete', slug=post.slug) }}" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</a>
+                </div>
+                <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i> Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <ul class="pager">
+    {% if posts.has_prev %}
+      <li><a href="{{ url_for('admin.page', page=posts.prev_num) }}">&larr; Newer posts</a></li>
+    {% else %}
+      <li class="disabled"><a>&larr; Newer posts</a></li>
+    {% endif %}
+
+    {% if posts.has_next %}
+      <li><a href="{{ url_for('admin.page', page=posts.next_num) }}">Older posts &rarr;</a></li>
+    {% else %}
+      <li class="disabled"><a>Older posts &rarr;</a></li>
+    {% endif %}
+  </ul>
+{% endblock %}
+
+
+{% block sidebar %}
+  <div class="strike-line top_0">
+    <span><small>Available Menus</small></span>
+  </div>
+  <div class="sidebar-module-inset">
+    <button onclick="location.href='{{ url_for("admin.create") }}'" class="btn btn-block btn-success cst__radius"><i class="glyphicon glyphicon-plus"></i> Create New Post</button>
+    <button onclick="location.href='{{ url_for("admin.create_tag") }}'" class="btn btn-block btn-warning cst__radius"><i class="glyphicon glyphicon-tag"></i> View Tags or Create</button>
+  </div><!-- end /.sidebar-module-inset --> 
+{% endblock %}

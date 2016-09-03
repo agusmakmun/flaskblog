@@ -1,0 +1,76 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700,300);
+body {
+  font: 12px 'Open Sans';
+  color: #333;
+}
+a {
+  -webkit-transition: color .15s cubic-bezier(.33,.66,.66,1);
+  transition: color .15s cubic-bezier(.33,.66,.66,1);
+}
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+  margin-top: 0;
+}
+h1.post-title {
+  font-size: 20px;
+}
+.post-title a:focus, .post-title a:hover {
+  text-decoration: none;
+}
+.cst__radius {
+  border-radius: 2px;
+}
+.main__container {
+  margin-top: 6em;
+  padding-top: 1em;
+}
+.sidebar ul {
+  padding: 0;
+}
+.strike-line {
+  display: table;
+  white-space: nowrap;
+  margin: 2em 0;
+}
+.strike-line::before,
+.strike-line::after {
+  border-top: 1px solid #ddd;
+  content: '';
+  display: table-cell;
+  position: relative;
+  top: 1em;
+  width: 50%;
+}
+.strike-line > span {
+  padding: 0 15px;
+  font-size: 22px;
+  line-height: 22px;
+}
+.pager {
+  text-align: left;
+}
+.pager > li > a {
+    width: 140px;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 30px;
+}
+.sidebar-module-inset {
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+p.meta {
+  color: #999;
+}
+.top_0 {
+  margin-top: 0;
+}
+.blog-footer {
+  margin-top: 2em;
+  padding: 40px 0;
+  padding-bottom: 30px;
+  color: #999;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-top: 1px solid #e5e5e5;
+}

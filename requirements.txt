@@ -1,0 +1,16 @@
+click==6.6
+Flask==0.11.1
+flask-mongoengine==0.8
+flask-peewee==0.6.7
+Flask-Script==2.0.5
+Flask-WTF==0.12
+itsdangerous==0.24
+Jinja2==2.8
+MarkupSafe==0.23
+mongoengine==0.10.6
+peewee==2.8.3
+pkg-resources==0.0.0
+pymongo==3.3.0
+Werkzeug==0.11.11
+wtf-peewee==0.2.6
+WTForms==2.1

@@ -1,0 +1,73 @@
+{% extends "admin/base.html" %}
+{% import "includes/forms.html" as forms %}
+{% block meta_title %}{% if create %}Add new Post{% else %}Edit Post{% endif %}{% endblock %}
+
+{% block content %}
+  <div class="strike-line top_0">
+    <span><small>
+    {% if create %}
+      Add new Post
+    {% else %}
+      Edit Post
+    {% endif %}
+    </small></span>
+  </div>
+
+  <form action="." method="post">
+    {{ forms.render(form) }}
+    <div class="actions">
+      <input type="submit" class="btn btn-primary" value="Save">
+      <a href="{{ url_for('admin.index') }}" class="btn btn-default">Cancel</a>
+    </div>
+  </form>
+
+  <script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
+  <script>
+    var id_title = document.getElementById('title');
+    id_title.className = 'form-control cst__radius';
+    id_title.setAttribute('required', 'required');
+
+    //document.getElementById('body').setAttribute('required', 'required');
+
+    tinymce.init({
+      selector: '#body',
+      height: 300,
+      plugins: [
+        'advlist autolink lists link image charmap print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table contextmenu paste code'
+      ],
+      toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+      content_css: [
+        '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+        '//www.tinymce.com/css/codepen.min.css'
+      ]
+    });
+  </script>
+
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-select.min.css') }}" />
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-select.min.js') }}"></script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    var id_tags = document.getElementById('tags');
+    $(id_tags).addClass('selectfilter form-control selectpicker');
+    $(id_tags).attr({
+        'data-live-search': 'true', 
+        'data-style': 'btn-default btn__custom__selectpicker'
+    });
+  });
+</script>
+{% endblock %}
+
+
+{% block sidebar %}
+  <div class="strike-line top_0">
+    <span><small>Available Menus</small></span>
+  </div>
+  <div class="sidebar-module-inset">
+    <button onclick="location.href='{{ url_for("admin.create") }}'" class="btn btn-block btn-success cst__radius"><i class="glyphicon glyphicon-plus"></i> Create New Post</button>
+    <button onclick="location.href='{{ url_for("admin.create_tag") }}'" class="btn btn-block btn-warning cst__radius"><i class="glyphicon glyphicon-tag"></i> View Tags or Create</button>
+  </div><!-- end /.sidebar-module-inset --> 
+{% endblock %}
