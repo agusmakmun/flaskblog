@@ -126,8 +126,8 @@ class Logout(MethodView):
                 ''', 401)
 
 
-admin.add_url_rule('/logout/', view_func=Logout.as_view('logout'))
 admin.add_url_rule('/admin/', view_func=List.as_view('index'))
+admin.add_url_rule('/admin/logout/', view_func=Logout.as_view('logout'))
 admin.add_url_rule('/admin/page/<int:page>/', view_func=List.as_view('page'))
 admin.add_url_rule('/admin/post/create/', defaults={'slug': None}, view_func=Detail.as_view('create'))
 admin.add_url_rule('/admin/post/edit/<slug>/', view_func=Detail.as_view('edit'))

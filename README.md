@@ -30,10 +30,9 @@ For all configuration, please check this **[config.py](flaskblog/config.py)**
 BASIC AUTHENTICATION USING HTTP-AUTH
 -----
 
-```
-/admin
-/logout
-```
+* Url for Login & Admin Page: `/admin`
+* Url for Logout: `/admin/logout`
+
 
 INSTALL
 -----
