@@ -26,6 +26,15 @@ CONFIG
 
 For all configuration, please check this **[config.py](flaskblog/config.py)**
 
+
+BASIC AUTHENTICATION USING HTTP-AUTH
+-----
+
+```
+/admin
+/logout
+```
+
 INSTALL
 -----
 
@@ -96,13 +105,4 @@ wtf-peewee==0.2.6
 
 ------
 
-So, for completely requirements you also can checkout at **[requirements.txt](requirements.txt)**.
-
-
-RUN THE SERVER
------
-
-
-```
-$ python manage.py runserver
-```
+So, we completely requirements you also can checkout at **[requirements.txt](requirements.txt)**.

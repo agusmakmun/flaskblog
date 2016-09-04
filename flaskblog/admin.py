@@ -117,6 +117,16 @@ class DeleteTag(MethodView):
         return redirect(url_for('admin.create_tag'))
 
 
+class Logout(MethodView):
+
+    def get(self):
+        # Returning basic http authentication for logout.
+        return (''' <p align="center">You are Logout ...</p>
+                    <meta http-equiv="refresh" content="2; url=/" />
+                ''', 401)
+
+
+admin.add_url_rule('/logout/', view_func=Logout.as_view('logout'))
 admin.add_url_rule('/admin/', view_func=List.as_view('index'))
 admin.add_url_rule('/admin/page/<int:page>/', view_func=List.as_view('page'))
 admin.add_url_rule('/admin/post/create/', defaults={'slug': None}, view_func=Detail.as_view('create'))
