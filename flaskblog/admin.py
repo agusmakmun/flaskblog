@@ -9,6 +9,7 @@ from flaskblog import config
 
 admin = Blueprint('admin', __name__, template_folder='templates')
 
+
 class TagView(MethodView):
     decorators = [requires_auth]
 
@@ -26,7 +27,7 @@ class TagView(MethodView):
             form = form_class(request.form)
 
         context = {
-            'tag' : tag,
+            'tag': tag,
             'form': form,
             'create_tag': slug is None,
             'tags': Tag.objects.all()
@@ -74,8 +75,8 @@ class Detail(MethodView):
             form = form_class(request.form)
 
         context = {
-            'post'  : post,
-            'form'  : form,
+            'post': post,
+            'form': form,
             'create': slug is None
         }
 
@@ -94,7 +95,7 @@ class Detail(MethodView):
             post.save()
             return redirect(url_for('admin.index'))
 
-        return render_template('admin/detail.html' **context)
+        return render_template('admin/detail.html' ** context)
 
 
 class DeletePost(MethodView):
@@ -108,7 +109,7 @@ class DeletePost(MethodView):
 
 
 class DeleteTag(MethodView):
-    decorators =[requires_auth]
+    decorators = [requires_auth]
 
     def get(self, slug):
         tag = Tag.objects.get_or_404(slug=slug)
@@ -129,7 +130,8 @@ class Logout(MethodView):
 admin.add_url_rule('/admin/', view_func=List.as_view('index'))
 admin.add_url_rule('/admin/logout/', view_func=Logout.as_view('logout'))
 admin.add_url_rule('/admin/page/<int:page>/', view_func=List.as_view('page'))
-admin.add_url_rule('/admin/post/create/', defaults={'slug': None}, view_func=Detail.as_view('create'))
+admin.add_url_rule('/admin/post/create/',
+                   defaults={'slug': None}, view_func=Detail.as_view('create'))
 admin.add_url_rule('/admin/post/edit/<slug>/', view_func=Detail.as_view('edit'))
 admin.add_url_rule('/admin/post/delete/<slug>/', view_func=DeletePost.as_view('delete'))
 admin.add_url_rule('/admin/tag/', defaults={'slug': None}, view_func=TagView.as_view('create_tag'))

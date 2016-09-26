@@ -13,7 +13,7 @@ username = 'admin'
 password = 'secret'
 
 # Disqus Configuration
-disqus_shortname = 'blogpythonlearning' # please change this.
+disqus_shortname = 'blogpythonlearning'  # please change this.
 
 # Post pagination per-page
 per_page = 5

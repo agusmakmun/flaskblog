@@ -4,9 +4,10 @@ from flask_peewee.utils import slugify
 
 from flaskblog import db
 
+
 class Tag(db.Document):
     title = db.StringField(max_length=255, required=True)
-    slug  = db.StringField(max_length=255, required=True, default='none')
+    slug = db.StringField(max_length=255, required=True, default='none')
 
     def get_absolute_url(self):
         return url_for('create_tag', kwargs={'slug': self.slug})
@@ -21,9 +22,9 @@ class Tag(db.Document):
 
 class Post(db.DynamicDocument):
     title = db.StringField(max_length=255, required=True)
-    slug  = db.StringField(max_length=255, required=True, default='none')
-    body  = db.StringField(required=True)
-    tags  = db.ListField(db.ReferenceField('Tag'), default=[])
+    slug = db.StringField(max_length=255, required=True, default='none')
+    body = db.StringField(required=True)
+    tags = db.ListField(db.ReferenceField('Tag'), default=[])
     created_date = db.DateTimeField(default=datetime.datetime.now, required=True)
 
     def get_absolute_url(self):
@@ -39,9 +40,8 @@ class Post(db.DynamicDocument):
     @property
     def post_type(self):
         return self.__class__.__name__
-    
+
     meta = {
-        'indexes' : ['-created_date', 'title', 'slug', 'tags'],
+        'indexes': ['-created_date', 'title', 'slug', 'tags'],
         'ordering': ['-created_date']
     }
-

@@ -2,6 +2,7 @@ from functools import wraps
 from flask import request, Response
 from flaskblog import config
 
+
 def check_auth(username, password):
     """ This function is called to check if a username / password
         combination is valid.

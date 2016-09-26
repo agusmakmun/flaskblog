@@ -12,19 +12,19 @@ class ListView(MethodView):
 
     def get(self, page=1):
         posts = Post.objects.paginate(page=page, per_page=config.per_page)
-        
+
         return render_template('posts/list.html',
-                    posts=posts,
-                    pagination=posts,
-                    disqus_shortname=config.disqus_shortname
-                )
+                               posts=posts,
+                               pagination=posts,
+                               disqus_shortname=config.disqus_shortname
+                               )
 
 
 class DetailView(MethodView):
 
     def get_context(self, slug):
         post = Post.objects.get_or_404(slug=slug)
-        
+
         # i dont no why if we use .exclude() is does not work.
         # so i handle it with this:
         # {% for rpost in related_posts %}
@@ -33,7 +33,7 @@ class DetailView(MethodView):
         related_posts = Post.objects.filter(tags__in=post.tags)[:5]
 
         context = {
-            'post'     : post,
+            'post': post,
             'related_posts': related_posts,
             'disqus_shortname': config.disqus_shortname
         }
@@ -47,35 +47,35 @@ class DetailView(MethodView):
 class SearchView(MethodView):
 
     def get(self, page=1):
-        query        = request.args.get('q')
+        query = request.args.get('q')
         if query == None:
             return redirect(url_for('posts.list'))
-        
+
         search_posts = Post.objects(title__icontains=query)
-        posts        = search_posts.paginate(page=page, per_page=config.per_page)
+        posts = search_posts.paginate(page=page, per_page=config.per_page)
 
         return render_template('posts/search.html',
-                    posts=posts,
-                    pagination=posts,
-                    query=query,
-                    disqus_shortname=config.disqus_shortname
-                )
+                               posts=posts,
+                               pagination=posts,
+                               query=query,
+                               disqus_shortname=config.disqus_shortname
+                               )
 
 
 class PostTagView(MethodView):
 
     def get(self, slug, page=1):
-        tag          = Tag.objects.get_or_404(slug=slug)
+        tag = Tag.objects.get_or_404(slug=slug)
         tagged_posts = Post.objects.filter(tags=tag)
-        posts        = tagged_posts.paginate(page=page, per_page=config.per_page)
-        tag_slug     = tag.slug
+        posts = tagged_posts.paginate(page=page, per_page=config.per_page)
+        tag_slug = tag.slug
         return render_template('posts/tag.html',
-                tag=tag,
-                tag_slug=tag_slug,
-                posts=posts,
-                pagination=posts,
-                disqus_shortname=config.disqus_shortname
-            )
+                               tag=tag,
+                               tag_slug=tag_slug,
+                               posts=posts,
+                               pagination=posts,
+                               disqus_shortname=config.disqus_shortname
+                               )
 
 
 posts.add_url_rule('/', view_func=ListView.as_view('list'))

@@ -8,6 +8,7 @@ app.config['SECRET_KEY'] = config.SECRET_KEY
 
 db = MongoEngine(app)
 
+
 def register_blueprints(app):
     from flaskblog.views import posts
     from flaskblog.admin import admin
