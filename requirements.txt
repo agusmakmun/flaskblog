@@ -9,7 +9,6 @@ Jinja2==2.8
 MarkupSafe==0.23
 mongoengine==0.10.6
 peewee==2.8.3
-pkg-resources==0.0.0
 pymongo==3.3.0
 Werkzeug==0.11.11
 wtf-peewee==0.2.6
